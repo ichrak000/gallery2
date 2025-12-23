@@ -1,7 +1,6 @@
 function upDate(previewPic) {
-  console.log("Événement déclenché (mouseover / focus)");
-  console.log("previewPic.alt :", previewPic.alt);
-  console.log("previewPic.src :", previewPic.src);
+  console.log("upDate triggered");
+  console.log(previewPic.alt);
 
   const imageDiv = document.getElementById("image");
   imageDiv.textContent = previewPic.alt;
@@ -9,36 +8,20 @@ function upDate(previewPic) {
 }
 
 function unDo() {
-  console.log("Événement déclenché (mouseout / blur)");
+  console.log("unDo triggered");
 
   const imageDiv = document.getElementById("image");
-  imageDiv.textContent = "Hover over an image below to display here";
-  imageDiv.style.backgroundImage = "url('')";
+  imageDiv.textContent =
+    "Hover over an image below to display here";
+  imageDiv.style.backgroundImage = "";
 }
 
-
 function addTabFocus() {
-  console.log("Page chargée – ajout des tabindex");
+  console.log("Page loaded");
 
-  const images = document.querySelectorAll(".preview");
-
+  const images = document.getElementsByClassName("preview");
 
   for (let i = 0; i < images.length; i++) {
     images[i].setAttribute("tabindex", "0");
-
-
-    images[i].addEventListener("mouseover", function () {
-      upDate(this);
-    });
-    images[i].addEventListener("mouseout", unDo);
-
-
-    images[i].addEventListener("focus", function () {
-      upDate(this);
-    });
-    images[i].addEventListener("blur", unDo);
   }
 }
-
-
-window.onload = addTabFocus;
