@@ -1,25 +1,44 @@
 function upDate(previewPic) {
-  console.log("Événement déclenché");
+  console.log("Événement déclenché (mouseover / focus)");
   console.log("previewPic.alt :", previewPic.alt);
   console.log("previewPic.src :", previewPic.src);
 
-  document.getElementById("image").textContent = previewPic.alt;
-
-  document.getElementById(
-    "image"
-  ).style.backgroundImage = `url('${previewPic.src}')`;
+  const imageDiv = document.getElementById("image");
+  imageDiv.textContent = previewPic.alt;
+  imageDiv.style.backgroundImage = `url('${previewPic.src}')`;
 }
 
 function unDo() {
-  document.getElementById("image").textContent =
-    "Hover over an image below to display here";
+  console.log("Événement déclenché (mouseout / blur)");
 
-  document.getElementById("image").style.backgroundImage = "url('')";
+  const imageDiv = document.getElementById("image");
+  imageDiv.textContent = "Hover over an image below to display here";
+  imageDiv.style.backgroundImage = "url('')";
 }
 
-const images = document.querySelectorAll(".preview");
 
-images.forEach((img) => {
-  img.addEventListener("mouseover", () => upDate(img));
-  img.addEventListener("mouseout", unDo);
-});
+function addTabFocus() {
+  console.log("Page chargée – ajout des tabindex");
+
+  const images = document.querySelectorAll(".preview");
+
+
+  for (let i = 0; i < images.length; i++) {
+    images[i].setAttribute("tabindex", "0");
+
+
+    images[i].addEventListener("mouseover", function () {
+      upDate(this);
+    });
+    images[i].addEventListener("mouseout", unDo);
+
+
+    images[i].addEventListener("focus", function () {
+      upDate(this);
+    });
+    images[i].addEventListener("blur", unDo);
+  }
+}
+
+
+window.onload = addTabFocus;
